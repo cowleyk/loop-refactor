@@ -14,48 +14,45 @@ module.exports = {
 
   sum: (arr, base) => {
     let sum = base;
-    for (var i = 0; i < arr.length; i++){
-      sum += arr[i];
-    }
+    sum += arr.reduce(function(a,b){
+      return a+b;
+    })
     return sum;
   },
 
   someObjsContainProp: (arr, prop) => {
-    for(var i = 0; i < arr.length; i++){
-      if(arr[i].hasOwnProperty(prop)){
-        return true;
-      }
+    let filtered = arr.filter(function(elem){
+      return elem[prop]
+    });
+    if(filtered.length > 0){
+      return true;
     }
     return false;
   },
 
   convertNameArrayToObject: (arr) => {
     let nameObj = [];
-    for(var i = 0; i < arr.length; i++){
-      let obj = {};
-      obj.first = arr[i][0];
-      obj.last = arr[i][1];
-      nameObj.push(obj);
-    }
+    nameObj = arr.map(function(elem){
+      return {first: elem[0], last: elem[1]};
+    });
     return nameObj;
   },
 
   objContainsProp: (arr, prop) => {
-    for (var i = 0; i < arr.length; i++){
-      if(!arr[i].hasOwnProperty(prop)){
-        return false;
+    let returnBool = true;
+    arr.forEach(function(elem){
+      if(!elem[prop]){
+        returnBool = false;
       }
-    }
-    return true;
+    });
+    return returnBool;
   },
 
   stringMatch: (arr, str) => {
     let matches = [];
-    for(var i = 0; i < arr.length; i++){
-      if (arr[i].includes(str)){
-        matches.push(arr[i]);
-      }
-    }
+    matches = arr.filter(function(elem){
+      return elem.match(str);
+    });
     return matches;
   },
 };
